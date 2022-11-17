@@ -8,21 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 import pandas as pd
 import time
-from bs4 import BeautifulSoup
-
-#list of websites for for sale vacant lots
-# https://www.land.com/Crawford-County-GA/all-land/2-50-acres/is-active/
-# https://www.zillow.com/crawford-county-ga/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22usersSearchTerm%22%3A%22Crawford%20County%2C%20GA%22%2C%22mapBounds%22%3A%7B%22west%22%3A-84.35536400316056%2C%22east%22%3A-83.55198875901993%2C%22south%22%3A32.452387492077776%2C%22north%22%3A32.9297118218284%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A2227%2C%22regionType%22%3A4%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22ah%22%3A%7B%22value%22%3Atrue%7D%2C%22sf%22%3A%7B%22value%22%3Afalse%7D%2C%22tow%22%3A%7B%22value%22%3Afalse%7D%2C%22mf%22%3A%7B%22value%22%3Afalse%7D%2C%22con%22%3A%7B%22value%22%3Afalse%7D%2C%22apco%22%3A%7B%22value%22%3Afalse%7D%2C%22apa%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%2C%22lot%22%3A%7B%22min%22%3A87120%2C%22max%22%3A2178000%7D%7D%2C%22isListVisible%22%3Atrue%2C%22mapZoom%22%3A11%7D
-# https://www.landwatch.com/georgia-land-for-sale/crawford-county/acres-2-50/available
-# https://www.realtor.com/realestateandhomes-search/Crawford-County_GA/type-land/lot-sqft-87120
-# https://www.trulia.com/for_sale/13079_c/LOT%7CLAND_type/
-
-#list of websites for for sold vacant lots
-#https://www.land.com/Crawford-County-GA/all-land/2-50-acres/is-sold/
 
 
-
-#LANDDOTCOME WEBSCRAPE IS DONE
 def get_land_dotcom_for_sale_data():
     #use the geckodriver to get to the specific url to find land.com for sale data
     options = Options()
@@ -56,7 +43,7 @@ def get_land_dotcom_for_sale_data():
     #rename the new columns
     final_land_dotcom_df.rename(columns={0:'Acres', 1: 'Price'}, inplace=True)
     print(final_land_dotcom_df)
-    final_land_dotcom_df['sale_sold'] = 'For Sale'
+    final_land_dotcom_df['sale_sold'] = 'sale'
     final_land_dotcom_df['source'] = "Land.com"
     print(final_land_dotcom_df)
 
@@ -296,7 +283,7 @@ def get_trulia_for_sale_data():
     trulia_df['Price'] = price_list
     trulia_df['Address'] = address_list
     trulia_df["Address"] = trulia_df["Address"].str.replace("\n", " ")
-    trulia_df['sale_sold'] = 'sale'
+    trulia_df['sale_sold'] = 'sold'
     trulia_df['source'] = 'trulia.com'
 
     # trulia_df.to_csv("C:/Users/teric/Desktop/vacantLandData/TruliaForSaleFinal.csv")
